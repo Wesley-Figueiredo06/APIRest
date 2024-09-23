@@ -3,11 +3,10 @@ var _jsonwebtoken = require('jsonwebtoken'); var _jsonwebtoken2 = _interopRequir
 
 class TokenController {
     async store(req, res) {
-
-        const { email = '', password = '' } = req.body;
+        const { email = "", password = "" } = req.body;
         if (!email || !password) {
             return res.status(401).json({
-                errors: ['None email or password'],
+                errors: ["None email or password"],
             });
         }
         try {
@@ -15,12 +14,12 @@ class TokenController {
 
             if (!user) {
                 return res.status(401).json({
-                    errors: ['user non exist'],
+                    errors: ["user non exist"],
                 });
             }
             if (!(await user.passwordIsValid(password))) {
                 return res.status(401).json({
-                    errors: ['Password invalid'],
+                    errors: ["Password invalid"],
                 });
             }
             const { id } = user;
@@ -28,21 +27,14 @@ class TokenController {
             const token = _jsonwebtoken2.default.sign({ id, email }, process.env.TOKEN_SECRET, {
                 expiresIn: process.env.TOKEN_EXPIRATION,
             });
-            return res.json({ token });
-
+            return res.json({ token, user: { nome: user.nome, id, email } });
         } catch (e) {
-
             return res.status(401).json({
-                errors: e.errors.map(erro => {
-                    return erro.message
+                errors: e.errors.map((erro) => {
+                    return erro.message;
                 }),
-
             });
-
         }
-
-
-
     }
 }
 
