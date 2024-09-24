@@ -11,7 +11,7 @@ import alunoRoutes from "./routes/alunoRoutes.js";
 import fotoRoutes from "./routes/fotoRoutes.js";
 import "./database/index.js";
 
-const whiteList = ["https://react.cyrus.com.br", "http://localhost:3000"];
+const whiteList = ["http://34.95.162.104:443", "http://localhost:3000"];
 
 const corsOptions = {
     origin: function (origin, callback) {
@@ -49,5 +49,4 @@ class App {
         this.app.use("/fotos/", fotoRoutes);
     }
 }
-
 export default new App().app;
